@@ -1,5 +1,5 @@
 import math
-
+import sys
 lastX=0
 lastY=0
 ballX=480/2
@@ -53,12 +53,11 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     tableX=table_size[0]
     tableY=table_size[1]
     
-    dx=(lastX-ballX+3)*2
-    dy=(lastY-ballY+3)*2
+    dx=(ballX-lastX)
+    dy=(ballY-lastY)
     
-    ballAngle = math.atan2(dy, dx)
-    
-
+    ballAngle = -math.atan2(dy,dx)
+    print(ballAngle*360/math.pi/2)
     if YGuess > paddleY:
 	return "down"
     else:
