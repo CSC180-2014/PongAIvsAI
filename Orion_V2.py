@@ -41,25 +41,36 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     global ballY
     lastX=ballX
     lastY=ballY
-    
+
     XGuess=ballX
     YGuess=ballY
-    
+
     paddleX=paddle_frect.pos[0]
     paddleY=paddle_frect.pos[1]+paddle_frect.size[1]/2
     ballX=ball_frect.pos[0]+ball_frect.size[0]/2
     ballY=ball_frect.pos[1]+ball_frect.size[1]/2
-    
+
     tableX=table_size[0]
     tableY=table_size[1]
-    
+
     dx=(ballX-lastX)
     dy=(ballY-lastY)
-    
+
+    slope = dy/dx
     ballAngle = -math.atan2(dy,dx)
-    print(ballAngle*360/math.pi/2)
-    if YGuess > paddleY:
+    #print('Ball Angle is:', ballAngle*360/math.pi/2)
+    #print('Ball slope is:', slope)
+    
+    if slope !=0:
+	while(0<=XGuess<=420):
+	    if ballAngle>0:
+		XGuess = ballX+(ballY/math.tan(ballAngle))
+	    else:
+		XGuess = ballX-((tableY-ballY)/math.tan(ballAngle))
+	    ballAngle = 2*math.pi-ballAngle
+	print(XGuess)
+    
+    if ballY > paddleY:
 	return "down"
     else:
 	return "up"
-    

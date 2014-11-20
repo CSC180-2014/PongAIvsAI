@@ -251,6 +251,7 @@ def game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, sco
     
     
     while max(score) < score_to_win:
+	time.sleep(.05)
 	old_score = score[:]
 	ball, score = check_point(score, ball, table_size)	
 	if score != old_score:
