@@ -247,7 +247,7 @@ def game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, sco
     score = [0, 0]
     
     while max(score) < score_to_win:
-	#time.sleep(0.1)
+	#time.sleep(0.05)
 	old_score = score[:]
 	ball, score = check_point(score, ball, table_size)	
 	if score != old_score:
@@ -319,7 +319,7 @@ def init_game():
     
     import chaser_ai #, smarter_chaser
     import Orion_V2
-    paddles[0].move_getter = directions_from_input #change to directions_from_input to play against the AI
+    paddles[0].move_getter = chaser_ai.chaser #change to directions_from_input to play against the AI
     paddles[1].move_getter = Orion_V2.chaser #on right side
     game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, score_to_win)
     pygame.quit()

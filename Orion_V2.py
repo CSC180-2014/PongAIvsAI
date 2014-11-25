@@ -58,10 +58,30 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     dy=(ballY-lastY)
 
     YGuess=ballY
-    
+    XGuess=ballX
+    if(dx>0):
+	while(XGuess<tableX):
+	    if(dy>0):
+		XGuess+=(tableY-ballY)/dy*dx
+	    else:
+		XGuess+=abs((ballY)/dy)*dx
+	    dy=-dy		
+	dy=-dy
+	if(dy>0):
+	    YGuess=tableY-(XGuess-tableX)/dx*dy
+	else:
+	    YGuess=-((XGuess-tableX)/dx*dy)
+	print(XGuess, ' ', YGuess)
+    else:
+	YGuess=tableY/2
+	
+    if YGuess > paddleY:
+	return "down"
+    else:
+	return "up"    
     #print('Ball Angle is:', ballAngle*360/math.pi/2)
     #print('Ball slope is:', slope)
-
+'''
     if dx !=0:
 	slope = dy/dx
 	ballAngle = -math.atan2(dy,dx)
@@ -78,7 +98,7 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
 		    YGuess=tableY-(math.tan(ballAngle)*(XGuess-tableX))
 		    ballAngle *=-1
 	    print(YGuess)		    
-	'''
+
 	if dx>0:
 	    while(XGuess<tableX):
 		if ballAngle>0:
@@ -90,10 +110,7 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
 		    YGuess=tableY+(math.tan(ballAngle)*(XGuess-tableX))
 		    ballAngle *=-1
 	    print(YGuess)
-	'''
-	        
-	
-    '''
+
 	if(dx>0):
 	    while(XGuess<paddleX):
 		ballAngle=ballAngle%(2*math.pi)
@@ -112,12 +129,6 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
 	    #print(XGuess)
 	elif(dx<0):
 	    pass
-    '''
-    if ballY > paddleY:
-	return "down"
-    else:
-	return "up"
-	'''
 	while(0<XGuess and XGuess<tableX):
 	    if ballAngle>0:
 		if dx>0:
