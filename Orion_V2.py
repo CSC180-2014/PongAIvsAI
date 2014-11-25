@@ -51,7 +51,7 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     ballX=ball_frect.pos[0]+ball_frect.size[0]/2
     ballY=ball_frect.pos[1]+ball_frect.size[1]/2
 
-    ballR=ball_frect.size[0]/2
+    ballR=ball_frect.size[1]/2
     
     paddleL=paddle_frect.size[1]
     tableX=table_size[0]
@@ -76,11 +76,11 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
 	    YGuess=tableY-(XGuess-paddleX-ballR)/dx*dy
 	else:
 	    YGuess=-((XGuess-paddleX-ballR)/dx*dy)
-	if (((paddleY-paddleL/3) < YGuess < (paddleY+paddleL/3)) and bounce==1):
+	if (((paddleY-paddleL/2) < YGuess < (paddleY+paddleL/2)) and bounce==1):
 	    if paddleY<YGuess:
-		YGuess-=paddleL/3
+		YGuess-=paddleL/2.1
 	    else:
-		YGuess+=paddleL/3	
+		YGuess+=paddleL/2.1	
     else:
 	YGuess=tableY/2
     if YGuess > paddleY:
