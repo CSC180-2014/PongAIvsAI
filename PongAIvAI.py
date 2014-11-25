@@ -63,8 +63,8 @@ class Paddle:
     
 	
     def move(self, enemy_frect, ball_frect, table_size):
-	direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))
-	#direction = timeout(self.move_getter, (self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size)), {}, 0.001)
+	#direction = self.move_getter(self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size))
+	direction = timeout(self.move_getter, (self.frect.copy(), enemy_frect.copy(), ball_frect.copy(), tuple(table_size)), {}, 0.001)
 	if direction == "up":
 	    self.frect.move_ip(0, -self.speed)
 	elif direction == "down":
@@ -246,12 +246,8 @@ def check_point(score, ball, table_size):
 def game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, score_to_win):
     score = [0, 0]
     
-    
-    
-    
-    
     while max(score) < score_to_win:
-	time.sleep(.05)
+	#time.sleep(0.1)
 	old_score = score[:]
 	ball, score = check_point(score, ball, table_size)	
 	if score != old_score:
@@ -323,7 +319,7 @@ def init_game():
     
     import chaser_ai #, smarter_chaser
     import Orion_V2
-    paddles[0].move_getter = chaser_ai.chaser #change to directions_from_input to play against the AI
+    paddles[0].move_getter = directions_from_input #change to directions_from_input to play against the AI
     paddles[1].move_getter = Orion_V2.chaser #on right side
     game_loop(screen, paddles, ball, table_size, clock_rate, turn_wait_rate, score_to_win)
     pygame.quit()

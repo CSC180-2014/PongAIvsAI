@@ -4,6 +4,8 @@ lastX=0
 lastY=0
 ballX=480/2
 ballY=280/2
+XGuess=480
+YGuess=280
 '''
     return "up" or "down", depending on which way the paddle should go to
     align its centre with the centre of the ball, assuming the ball will
@@ -39,11 +41,10 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     global lastY
     global ballX
     global ballY
+    global XGuess
+    global YGuess
     lastX=ballX
     lastY=ballY
-
-    XGuess=ballX
-    YGuess=ballY
 
     paddleX=paddle_frect.pos[0]
     paddleY=paddle_frect.pos[1]+paddle_frect.size[1]/2
@@ -56,21 +57,93 @@ def chaser(paddle_frect, other_paddle_frect, ball_frect, table_size):
     dx=(ballX-lastX)
     dy=(ballY-lastY)
 
-    slope = dy/dx
-    ballAngle = -math.atan2(dy,dx)
+    YGuess=ballY
+    
     #print('Ball Angle is:', ballAngle*360/math.pi/2)
     #print('Ball slope is:', slope)
-    
-    if slope !=0:
-	while(0<=XGuess<=420):
-	    if ballAngle>0:
-		XGuess = ballX+(ballY/math.tan(ballAngle))
-	    else:
-		XGuess = ballX-((tableY-ballY)/math.tan(ballAngle))
-	    ballAngle = 2*math.pi-ballAngle
-	print(XGuess)
-    
+
+    if dx !=0:
+	slope = dy/dx
+	ballAngle = -math.atan2(dy,dx)
+	XGuess = ballX
+	
+	if dx<0:
+	    while(0<XGuess):
+		if ballAngle>0:
+		    XGuess -= (ballY/math.tan(ballAngle))
+		    YGuess= (math.tan(ballAngle)*(XGuess))
+		    ballAngle *=-1
+		else:
+		    XGuess += ((tableY-ballY)/math.tan(ballAngle))
+		    YGuess=tableY-(math.tan(ballAngle)*(XGuess-tableX))
+		    ballAngle *=-1
+	    print(YGuess)		    
+	'''
+	if dx>0:
+	    while(XGuess<tableX):
+		if ballAngle>0:
+		    XGuess += (ballY/math.tan(ballAngle))
+		    YGuess= (math.tan(ballAngle)*(XGuess-tableX))
+		    ballAngle *=-1
+		else:
+		    XGuess -= ((tableY-ballY)/math.tan(ballAngle))
+		    YGuess=tableY+(math.tan(ballAngle)*(XGuess-tableX))
+		    ballAngle *=-1
+	    print(YGuess)
+	'''
+	        
+	
+    '''
+	if(dx>0):
+	    while(XGuess<paddleX):
+		ballAngle=ballAngle%(2*math.pi)
+		if ballAngle>0:
+		    XGuess += (ballY/math.tan(ballAngle))
+		    print(ballAngle, " ", XGuess)
+		    ballAngle = (2*math.pi)-ballAngle
+		elif ballAangle<0:
+		    XGuess -= ((tableY-ballY)/math.tan(ballAngle))
+		    print(ballAngle, " ", XGuess)
+		    ballAngle = (2*math.pi)-ballAngle
+		else:
+		    YGuess = ballY
+		    XGuess = tableX+1
+	    ballAngle = (2*math.pi)-ballAngle
+	    #print(XGuess)
+	elif(dx<0):
+	    pass
+    '''
     if ballY > paddleY:
 	return "down"
     else:
 	return "up"
+	'''
+	while(0<XGuess and XGuess<tableX):
+	    if ballAngle>0:
+		if dx>0:
+		    XGuess = XGuess-(ballY/math.tan(ballAngle))
+		elif dx<0:
+		    XGuess = XGuess+(ballY/math.tan(ballAngle))
+		ballAngle = (2*math.pi)-ballAngle
+	    elif ballAngle<0:
+		if dx>0:
+		    XGuess = XGuess-(ballY/math.tan(ballAngle))
+		elif dx<0:
+		    XGuess = XGuess+(ballY/math.tan(ballAngle))
+		ballAngle = (2*math.pi)-ballAngle
+	    else:
+		pass
+	    
+	ballAngle = 2*math.pi-ballAngle
+	print(XGuess)
+	
+	if(XGuess<0):
+	    YGuess= ballY-(math.tan(ballAngle)*ballX)
+
+	    print(YGuess)
+	elif(XGuess>tableX):
+	    YGuess= ballY-(math.tan(ballAngle)*(ballX-tableX))
+	    print(YGuess)
+	'''    
+    	
+
