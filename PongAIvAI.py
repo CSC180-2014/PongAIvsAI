@@ -305,9 +305,9 @@ def init_game():
     dust_error = 0.0
     init_speed_mag = 2
     timeout = .200
-    clock_rate = 80
-    turn_wait_rate = 3
-    score_to_win = 5
+    clock_rate = 100000
+    turn_wait_rate = 10000
+    score_to_win = 10000
     
     
     screen = pygame.display.set_mode(table_size)    
